@@ -44,7 +44,7 @@ cat <<EOF | kubectl apply -f - \
 apiVersion: kritis.grafeas.io/v1beta1
 kind: Attestor
 metadata:
-  name: kritis-authority
+  name: kritis-attestor
   namespace: default
 spec:
   noteReference: v1beta1/projects/standalone
@@ -63,7 +63,7 @@ metadata:
   namespace: default
 spec:
   attestorNames:
-  - kritis-authority
+  - kritis-attestor
 EOF
 
 kubectl delete pods java

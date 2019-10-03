@@ -101,8 +101,8 @@ func main() {
 }
 
 func createNoteRequest() *grafeas.CreateNoteRequest {
-	aaNote := &attestation.Authority{
-		Hint: &attestation.Authority_Hint{
+	aaNote := &attestation.Attestor{
+		Hint: &attestation.Attestor_Hint{
 			HumanReadableName: "attestation",
 		},
 	}
@@ -110,7 +110,7 @@ func createNoteRequest() *grafeas.CreateNoteRequest {
 		Name:             fmt.Sprintf("projects/%s/notes/%s", DefaultProject, "att"),
 		ShortDescription: fmt.Sprintf("Generic Attestation Policy Attestor"),
 		LongDescription:  fmt.Sprintf("Generic Attestation Policy Attestor deployed in %s namespace", "default"),
-		Type: &grafeas.Note_Attestor{
+		Type: &grafeas.Note_AttestationAuthority{
 			Attestor: aaNote,
 		},
 	}

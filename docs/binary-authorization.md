@@ -121,23 +121,23 @@ requirements: project, service account, cluster.
 
 ### Policy Management
 
-Key concepts of BinAuthz are Attestation Authority and Policy, realized as REST
-resources managed through a REST API. An Attestation Authority is a named entity
+Key concepts of BinAuthz are Attestor and Policy, realized as REST
+resources managed through a REST API. An Attestor is a named entity
 which has the power to create attestations. As a REST resource, it encapsulates
 the location of its attestations (where to store and retrieve from), as well as
 verification criteria (what makes an attestation valid). A Policy then names
-Attestation Authorities (whose attestations are) required to deploy an artifact
+Attestors (whose attestations are) required to deploy an artifact
 to some target.
 
 #### Example
 
-This might be an Attestation Authority which represents an organization’s secure
+This might be an Attestor which represents an organization’s secure
 build system.
 
 ```
 {
   “name”: “projects/secure-builder/attestors/built-securely”
-  “public_keys”: <list of keys expected to sign this authority’s attestations>
+  “public_keys”: <list of keys expected to sign this attestor’s attestations>
 }
 ```
 
@@ -157,10 +157,10 @@ may then look like this.
 
 Attestations are represented as Component Metadata objects. Grafeas is its open
 source sister project, and can be used as attestation transport too. An
-Attestation Authority names a Note (of Kind `ATTESTATION`) which is used as an
-anchor for this authority’s attestations, and optionally specifies public keys
-if attestations must be signed. Attestations by this authority are then
-represented as Occurrences attached to the authority’s Note.
+Attestor names a Note (of Kind `ATTESTATION`) which is used as an
+anchor for this attestor’s attestations, and optionally specifies public keys
+if attestations must be signed. Attestations by this attestor are then
+represented as Occurrences attached to the attestor’s Note.
 
 ### Enforcement Module Entry Point
 
@@ -221,8 +221,8 @@ the future. Furthermore, an open specification of BinAuthz is forthcoming.
 
 ### Richer Policies and Attestations
 
-BinAuthz attestation is like a seal stamp: its only meaning is “authority `X`
-attests artifact `Y`”. A richer language of statements, such as “authority `X`
+BinAuthz attestation is like a seal stamp: its only meaning is “attestor `X`
+attests artifact `Y`”. A richer language of statements, such as “attestor `X`
 attests that artifact `Y` was built from source code `Z`” allows for more
 expressive policies and more meaningful control. We plan to extend the data
 model and policy language to support such richer statements.

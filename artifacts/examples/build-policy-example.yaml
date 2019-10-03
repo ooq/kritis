@@ -4,6 +4,6 @@ metadata:
   name: kritis-bp
   namespace: default
 spec:
-  attestorName: kritis-authority
+  attestorName: kritis-attestor
   buildRequirements:
     builtFrom: https://source.developers.google.com/p/binauthz-demo1-builder/r/demo-app:build.*

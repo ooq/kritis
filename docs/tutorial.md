@@ -73,7 +73,7 @@
         kubectl create secret generic my-attestor --from-file=public=gpg.pub --from-file=private=gpg.priv --from-literal=passphrase=${PHRASE}
         ```
 
-    1. Create an attestation authority:
+    1. Create an attestor:
 
         ```shell
         cat <<EOF | kubectl apply -f - \

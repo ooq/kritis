@@ -7,7 +7,7 @@ Installing Kritis, creates a number of resources in your cluster. Here are the m
 | kritis-validation-hook| ValidatingWebhookConfiguration | This is Kubernetes [Validating Admission Webhook](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers) which enforces the policies. |
 | genericattestationpolicies.kritis.grafeas.io | crd | This CRD defines the generic attestation policy kind GenericAttestationPolicy.|
 | imagesecuritypolicies.kritis.grafeas.io | crd | This CRD defines the image security policy kind ImageSecurityPolicy.|
-| attestors.kritis.grafeas.io | crd | The CRD defines the attestation authority policy kind Attestor.|
+| attestors.kritis.grafeas.io | crd | The CRD defines the attestor policy kind Attestor.|
 | tls-webhook-secret | secret | Secret required for ValidatingWebhookConfiguration|
 
 ## kritis-validation-hook
@@ -111,13 +111,13 @@ Here are the valid values for Policy Specs.
 The webhook will attest valid images once they pass the validity check. This is important because re-deployments can occur from scaling events,rescheduling, termination, etc. Attested images are always admitted in custer.
 This allows users to manually deploy a container with an older image which was validated in past.
 
-To view the attesation authority CRD run,
+To view the attestor CRD run,
 
 ```shell
 kubectl describe crd attestors.kritis.grafeas.io
 ```
 
-To list all attestation authorities:
+To list all attestors:
 
 ```shell
 kubectl get Attestor --all-namespaces
@@ -130,7 +130,7 @@ NAMESPACE             NAME             AGE
 qa                    qa-attestator    11h
 ```
 
-example AttestionAuthority:
+example Attestor:
 
 ```yaml
 apiVersion: kritis.github.com/v1beta1

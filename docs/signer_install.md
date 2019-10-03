@@ -113,7 +113,7 @@ review the policies to ensure they are properly ACLed.
 
 ```shell
 # Create the CRDs
-kubectl create -f ./artifacts/attestation-authority-crd.yaml 
+kubectl create -f ./artifacts/attestor-crd.yaml 
 kubectl create -f ./artifacts/build-policy-crd.yaml
 
 # Set up the access permissions for the CRDs
@@ -123,7 +123,7 @@ kubectl create -f ./artifacts/examples/kritis-role-example.yaml
 kubectl create -f ./artifacts/examples/kritis-rolebinding-example.yaml
 
 # Create example policies
-kubectl create -f ./artifacts/examples/attestation-authority-example.yaml
+kubectl create -f ./artifacts/examples/attestor-example.yaml
 kubectl create -f ./artifacts/examples/build-policy-example.yaml
 ```
 
@@ -133,14 +133,14 @@ Kritis uses Kubernetes secrets to store the PGP keys to create the attestations.
 Please ensure the secret is properly protected by ACLs.
 
 ```shell
-kubectl create secret generic kritis-authority-key \
+kubectl create secret generic kritis-attestor-key \
   --from-file=public=${PUB_KEY_FILE} --from-file=private=${PRIV_KEY_FILE} --from-literal=passphrase=<PASSPHRASE>
 ```
 
 ## Signer Execution
 
 The signer will connect to the pubsub, listen to build events and create
-attestations for all attestation authorities that are connected to a matching
+attestations for all attestors that are connected to a matching
 policy.
 
 ```shell

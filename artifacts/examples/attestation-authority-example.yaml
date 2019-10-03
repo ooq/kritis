@@ -1,8 +1,8 @@
 apiVersion: kritis.grafeas.io/v1beta1
 kind: Attestor
 metadata:
-  name: kritis-authority
+  name: kritis-attestor
   namespace: default
 spec:
   noteReference: v1alpha1/projects/kritis-test1
-  privateKeySecretName: kritis-authority-key
+  privateKeySecretName: kritis-attestor-key

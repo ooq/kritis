@@ -17,7 +17,7 @@ limitations under the License.
 package attestation
 
 // ValidatedAttestation represents a trusted and verified attestation made by
-// the named attestation authority about the named container image.
+// the named attestor about the named container image.
 // An example ValidatedAttestation may look like:
 // {
 //   AttestorName: "build-attestor",

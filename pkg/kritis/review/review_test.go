@@ -420,13 +420,13 @@ func TestGetAttestorsForGAP(t *testing.T) {
 		expectedLen int
 	}{
 		{
-			name:        "correct authorities list",
+			name:        "correct attestors list",
 			aList:       []string{"a1", "a2"},
 			shouldErr:   false,
 			expectedLen: 2,
 		},
 		{
-			name:      "one incorrect authority in the list",
+			name:      "one incorrect attestor in the list",
 			aList:     []string{"a1", "err"},
 			shouldErr: true,
 		},
@@ -490,13 +490,13 @@ func TestGetAttestorsForISP(t *testing.T) {
 		expectedLen int
 	}{
 		{
-			name:        "correct authorities list",
+			name:        "correct attestors list",
 			aList:       []string{"a1", "a2"},
 			shouldErr:   false,
 			expectedLen: 2,
 		},
 		{
-			name:      "one incorrect authority in the list",
+			name:      "one incorrect attestor in the list",
 			aList:     []string{"a1", "err"},
 			shouldErr: true,
 		},

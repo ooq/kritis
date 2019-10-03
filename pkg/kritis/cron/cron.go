@@ -28,7 +28,7 @@ import (
 	"github.com/grafeas/kritis/pkg/kritis/review"
 	"github.com/grafeas/kritis/pkg/kritis/secrets"
 
-	"github.com/grafeas/kritis/pkg/kritis/crd/authority"
+	"github.com/grafeas/kritis/pkg/kritis/crd/attestor"
 	"github.com/grafeas/kritis/pkg/kritis/crd/securitypolicy"
 	"github.com/grafeas/kritis/pkg/kritis/violation"
 	corev1 "k8s.io/api/core/v1"
@@ -61,7 +61,7 @@ func NewCronConfig(cs *kubernetes.Clientset, client metadata.Fetcher) *Config {
 		Client:    client,
 		ReviewConfig: &review.Config{
 			Secret:    secrets.Fetch,
-			Auths:     authority.Authority,
+			Auths:     attestor.Attestor,
 			Strategy:  defaultViolationStrategy,
 			IsWebhook: false,
 			Validate:  securitypolicy.ValidateImageSecurityPolicy,

@@ -19,7 +19,7 @@ package gcbsigner
 import (
 	"github.com/golang/glog"
 	"github.com/grafeas/kritis/pkg/kritis/apis/kritis/v1beta1"
-	"github.com/grafeas/kritis/pkg/kritis/crd/authority"
+	"github.com/grafeas/kritis/pkg/kritis/crd/attestor"
 	"github.com/grafeas/kritis/pkg/kritis/crd/buildpolicy"
 	"github.com/grafeas/kritis/pkg/kritis/metadata"
 	"github.com/grafeas/kritis/pkg/kritis/secrets"
@@ -51,12 +51,12 @@ type BuildProvenance struct {
 
 // For testing
 var (
-	authFetcher = authority.Authority
+	authFetcher = attestor.Attestor
 )
 
 // ValidateAndSign validates builtFrom against the build policies and creates
-// attestations for all authorities for the matching policies.
-// Returns an error if creating an attestation for any authority fails.
+// attestations for all attestors for the matching policies.
+// Returns an error if creating an attestation for any attestor fails.
 func (s Signer) ValidateAndSign(prov BuildProvenance, bps []v1beta1.BuildPolicy) error {
 	for _, bp := range bps {
 		glog.Infof("Validating %q against BuildPolicy %q", prov.ImageRef, bp.Name)
@@ -72,9 +72,9 @@ func (s Signer) ValidateAndSign(prov BuildProvenance, bps []v1beta1.BuildPolicy)
 	return nil
 }
 
-func (s Signer) addAttestation(image string, ns string, authority string) error {
-	// Get AttestaionAuthority specified in the buildpolicy.
-	a, err := authFetcher(ns, authority)
+func (s Signer) addAttestation(image string, ns string, attestor string) error {
+	// Get Attestor specified in the buildpolicy.
+	a, err := authFetcher(ns, attestor)
 	if err != nil {
 		return err
 	}
@@ -82,7 +82,7 @@ func (s Signer) addAttestation(image string, ns string, authority string) error 
 	if err != nil {
 		return err
 	}
-	// Get secret for this Authority
+	// Get secret for this Attestor
 	sec, err := s.config.Secret(ns, a.Spec.PrivateKeySecretName)
 	if err != nil {
 		return err

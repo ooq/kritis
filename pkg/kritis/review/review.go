@@ -21,7 +21,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/grafeas/kritis/pkg/kritis/apis/kritis/v1beta1"
-	"github.com/grafeas/kritis/pkg/kritis/crd/authority"
+	"github.com/grafeas/kritis/pkg/kritis/crd/attestor"
 	"github.com/grafeas/kritis/pkg/kritis/crd/securitypolicy"
 	"github.com/grafeas/kritis/pkg/kritis/metadata"
 	"github.com/grafeas/kritis/pkg/kritis/policy"
@@ -40,7 +40,7 @@ type Reviewer struct {
 type Config struct {
 	Validate  securitypolicy.ValidateFunc
 	Secret    secrets.Fetcher
-	Auths     authority.Fetcher
+	Auths     attestor.Fetcher
 	Strategy  violation.Strategy
 	IsWebhook bool
 }
@@ -178,12 +178,12 @@ func (r Reviewer) handleViolations(image string, pod *v1.Pod, violations []polic
 func (r Reviewer) addAttestations(image string, isp v1beta1.ImageSecurityPolicy, auths []v1beta1.Attestor) error {
 	errMsgs := []string{}
 	for _, a := range auths {
-		// Get or Create Note for this this Authority
+		// Get or Create Note for this this Attestor
 		n, err := util.GetOrCreateAttestationNote(r.client, &a)
 		if err != nil {
 			errMsgs = append(errMsgs, err.Error())
 		}
-		// Get secret for this Authority
+		// Get secret for this Attestor
 		s, err := r.config.Secret(isp.Namespace, a.Spec.PrivateKeySecretName)
 		if err != nil {
 			errMsgs = append(errMsgs, err.Error())

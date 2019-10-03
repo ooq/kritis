@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   attestorNames:
-  - kritis-authority
+  - kritis-attestor
   imageAllowlist:
   - gcr.io/my/image
   packageVulnerabilityRequirements:

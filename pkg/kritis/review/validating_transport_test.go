@@ -93,7 +93,7 @@ func TestValidatingTransport(t *testing.T) {
 				KeyID:     successFpr,
 			}}, errorExpected: false, attError: nil},
 		{name: "attestation fetch error", auth: validAuth, expected: nil, attestations: nil, errorExpected: true, attError: errors.New("can't fetch attestations")},
-		{name: "invalid attestation authority error", auth: invalidAuth, expected: nil, attestations: []metadata.PGPAttestation{
+		{name: "invalid attestor error", auth: invalidAuth, expected: nil, attestations: []metadata.PGPAttestation{
 			{
 				Signature: sig,
 				KeyID:     successFpr,

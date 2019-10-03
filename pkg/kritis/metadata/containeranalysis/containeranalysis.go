@@ -78,7 +78,7 @@ func (c Client) Vulnerabilities(containerImage string) ([]metadata.Vulnerability
 	return vulnz, nil
 }
 
-//Attestations gets AttesationAuthority Occurrences for a specified image.
+//Attestations gets Attestor Occurrences for a specified image.
 func (c Client) Attestations(containerImage string) ([]metadata.PGPAttestation, error) {
 	occs, err := c.fetchOccurrence(containerImage, Attestor)
 	if err != nil {
@@ -150,8 +150,8 @@ func (c Client) CreateAttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note
 	if err != nil {
 		return nil, err
 	}
-	aaNote := &attestation.Authority{
-		Hint: &attestation.Authority_Hint{
+	aaNote := &attestation.Attestor{
+		Hint: &attestation.Attestor_Hint{
 			HumanReadableName: aa.Name,
 		},
 	}
@@ -159,7 +159,7 @@ func (c Client) CreateAttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note
 		Name:             fmt.Sprintf("projects/%s/notes/%s", noteProject, aa.Name),
 		ShortDescription: fmt.Sprintf("Image Policy Security Attestor"),
 		LongDescription:  fmt.Sprintf("Image Policy Security Attestor deployed in %s namespace", aa.Namespace),
-		Type: &grafeas.Note_Attestor{
+		Type: &grafeas.Note_AttestationAuthority{
 			Attestor: aaNote,
 		},
 	}
@@ -219,7 +219,7 @@ func (c Client) CreateAttestationOccurence(note *grafeas.Note,
 		NoteName: note.GetName(),
 		Details:  attestationDetails,
 	}
-	// Create the AttestationAuthrity Occurrence in the Project Attestor Note.
+	// Create the Attestor Occurrence in the Project Attestor Note.
 	req := &grafeas.CreateOccurrenceRequest{
 		Occurrence: occ,
 		Parent:     fmt.Sprintf("projects/%s", getProjectFromContainerImage(containerImage)),

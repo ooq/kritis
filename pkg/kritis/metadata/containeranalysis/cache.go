@@ -62,7 +62,7 @@ func (c Cache) Vulnerabilities(image string) ([]metadata.Vulnerability, error) {
 	return v, err
 }
 
-// Attestations gets AttesationAuthority Occurrences for a specified image from cache or from client.
+// Attestations gets Attestor Occurrences for a specified image from cache or from client.
 func (c Cache) Attestations(image string) ([]metadata.PGPAttestation, error) {
 	if a, ok := c.att[image]; ok {
 		return a, nil

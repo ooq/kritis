@@ -15,7 +15,7 @@
 # limitations under the License.
 set -e
 
-# Generate Certificate Authority
+# Generate Certificate Attestor
 openssl genrsa -out ca.key 2048
 openssl req -new -x509 -days 365 -key ca.key -out ca.crt
 

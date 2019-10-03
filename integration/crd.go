@@ -32,7 +32,7 @@ import (
 )
 
 const (
-	testAttesationAuthority = `apiVersion: kritis.grafeas.io/v1beta1
+	testAttestor = `apiVersion: kritis.grafeas.io/v1beta1
 kind: Attestor
 metadata:
   name: test-attestor
@@ -78,7 +78,7 @@ func createAttestor(t *testing.T, ns string) {
 		t.Fatalf("unexpected error %s", err)
 	}
 
-	// Create the Attestation authority
+	// Create the attestor
 	createAA(t, ns, pubKeyEnc)
 }
 
@@ -112,7 +112,7 @@ func createFileWithContents(t *testing.T, d string, c string) string {
 func createAA(t *testing.T, ns string, pubkey string) {
 	t.Helper()
 	cmd := exec.Command("kubectl", "apply", "-n", ns, "-f", "-")
-	cmd.Stdin = bytes.NewReader([]byte(fmt.Sprintf(testAttesationAuthority, aaSecret, pubkey)))
+	cmd.Stdin = bytes.NewReader([]byte(fmt.Sprintf(testAttestor, aaSecret, pubkey)))
 	if _, err := integration_util.RunCmdOut(cmd); err != nil {
 		t.Fatalf("testing error: %v", err)
 	}
