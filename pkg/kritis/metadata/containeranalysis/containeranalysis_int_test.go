@@ -50,8 +50,8 @@ func TestGetVulnerabilities(t *testing.T) {
 
 func TestCreateAttestationNoteAndOccurrence(t *testing.T) {
 	d, err := New()
-	aa := &kritisv1beta1.AttestationAuthority{
-		Spec: kritisv1beta1.AttestationAuthoritySpec{
+	aa := &kritisv1beta1.Attestor{
+		Spec: kritisv1beta1.AttestorSpec{
 			NoteReference: fmt.Sprintf("%s/projects/%s", IntAPI, IntProject),
 		},
 		ObjectMeta: metav1.ObjectMeta{
@@ -71,7 +71,7 @@ func TestCreateAttestationNoteAndOccurrence(t *testing.T) {
 	if note.Name != expectedNoteName {
 		t.Fatalf("Expected %s.\n Got %s", expectedNoteName, note.Name)
 	}
-	actualHint := note.GetAttestationAuthority().Hint.GetHumanReadableName()
+	actualHint := note.GetAttestor().Hint.GetHumanReadableName()
 	if actualHint != IntTestNoteName {
 		t.Fatalf("Expected %s.\n Got %s", expectedNoteName, actualHint)
 	}

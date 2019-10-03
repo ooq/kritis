@@ -24,15 +24,15 @@ import (
 // +genclient:noStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-type AttestationAuthority struct {
+type Attestor struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec AttestationAuthoritySpec `json:"spec"`
+	Spec AttestorSpec `json:"spec"`
 }
 
-// AttestationAuthoritySpec is the spec for a AttestationAuthority resource
-type AttestationAuthoritySpec struct {
+// AttestorSpec is the spec for a Attestor resource
+type AttestorSpec struct {
 	NoteReference        string `json:"noteReference"`
 	PrivateKeySecretName string `json:"privateKeySecretName"`
 	PublicKeyData        string `json:"publicKeyData"`
@@ -41,10 +41,10 @@ type AttestationAuthoritySpec struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// AttestationAuthorityList is a list of AttestationAuthority resources
-type AttestationAuthorityList struct {
+// AttestorList is a list of Attestor resources
+type AttestorList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 
-	Items []AttestationAuthority `json:"items"`
+	Items []Attestor `json:"items"`
 }

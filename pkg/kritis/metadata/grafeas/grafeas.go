@@ -39,9 +39,9 @@ import (
 )
 
 const (
-	PkgVulnerability     = "PACKAGE_VULNERABILITY"
-	AttestationAuthority = "ATTESTATION_AUTHORITY"
-	DefaultProject       = "kritis" // DefaultProject is the default project name, only single project is supported
+	PkgVulnerability = "PACKAGE_VULNERABILITY"
+	Attestor         = "ATTESTOR"
+	DefaultProject   = "kritis" // DefaultProject is the default project name, only single project is supported
 )
 
 // Client implements the Fetcher interface using grafeas API.
@@ -134,7 +134,7 @@ func (c Client) Vulnerabilities(containerImage string) ([]metadata.Vulnerability
 
 // Attestations gets AttesationAuthority Occurrences for a specified image.
 func (c Client) Attestations(containerImage string) ([]metadata.PGPAttestation, error) {
-	occs, err := c.fetchOccurrence(containerImage, AttestationAuthority)
+	occs, err := c.fetchOccurrence(containerImage, Attestor)
 	if err != nil {
 		return nil, err
 	}
@@ -145,8 +145,8 @@ func (c Client) Attestations(containerImage string) ([]metadata.PGPAttestation, 
 	return p, nil
 }
 
-// CreateAttestationNote creates an attestation note from AttestationAuthority
-func (c Client) CreateAttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeas.Note, error) {
+// CreateAttestationNote creates an attestation note from Attestor
+func (c Client) CreateAttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note, error) {
 	aaNote := &attestation.Authority{
 		Hint: &attestation.Authority_Hint{
 			HumanReadableName: aa.Name,
@@ -156,8 +156,8 @@ func (c Client) CreateAttestationNote(aa *kritisv1beta1.AttestationAuthority) (*
 		Name:             fmt.Sprintf("projects/%s/notes/%s", DefaultProject, aa.Name),
 		ShortDescription: fmt.Sprintf("Image Policy Security Attestor"),
 		LongDescription:  fmt.Sprintf("Image Policy Security Attestor deployed in %s namespace", aa.Namespace),
-		Type: &grafeas.Note_AttestationAuthority{
-			AttestationAuthority: aaNote,
+		Type: &grafeas.Note_Attestor{
+			Attestor: aaNote,
 		},
 	}
 
@@ -169,8 +169,8 @@ func (c Client) CreateAttestationNote(aa *kritisv1beta1.AttestationAuthority) (*
 	return c.client.CreateNote(c.ctx, req)
 }
 
-//AttestationNote returns a note if it exists for given AttestationAuthority
-func (c Client) AttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeas.Note, error) {
+//AttestationNote returns a note if it exists for given Attestor
+func (c Client) AttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note, error) {
 	req := &grafeas.GetNoteRequest{
 		Name: fmt.Sprintf("projects/%s/notes/%s", DefaultProject, aa.Name),
 	}
@@ -209,7 +209,7 @@ func (c Client) CreateAttestationOccurence(note *grafeas.Note,
 		NoteName: note.GetName(),
 		Details:  attestationDetails,
 	}
-	// Create the AttestationAuthority Occurrence in the Project AttestationAuthority Note.
+	// Create the Attestor Occurrence in the Project Attestor Note.
 	req := &grafeas.CreateOccurrenceRequest{
 		Occurrence: occ,
 		Parent:     fmt.Sprintf("projects/%s", DefaultProject),

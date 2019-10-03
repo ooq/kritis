@@ -135,8 +135,8 @@ func TestCheckPods(t *testing.T) {
 			SecretName: name,
 		}, nil
 	}
-	aMock := func(namespace string, name string) (*v1beta1.AttestationAuthority, error) {
-		return &v1beta1.AttestationAuthority{}, nil
+	aMock := func(namespace string, name string) (*v1beta1.Attestor, error) {
+		return &v1beta1.Attestor{}, nil
 	}
 	cMock := &testutil.MockMetadataClient{}
 	type args struct {

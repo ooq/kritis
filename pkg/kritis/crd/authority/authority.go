@@ -25,12 +25,12 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-type Lister func(namespace string) ([]v1beta1.AttestationAuthority, error)
-type Fetcher func(namespace string, name string) (*v1beta1.AttestationAuthority, error)
+type Lister func(namespace string) ([]v1beta1.Attestor, error)
+type Fetcher func(namespace string, name string) (*v1beta1.Attestor, error)
 
-// Authorities returns all AttestationAuthorities in the specified namespaces
-// Pass in an empty string to get all AttestationAuthorities in all namespaces
-func Authorities(namespace string) ([]v1beta1.AttestationAuthority, error) {
+// Authorities returns all Attestors in the specified namespaces
+// Pass in an empty string to get all Attestors in all namespaces
+func Authorities(namespace string) ([]v1beta1.Attestor, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {
 		return nil, fmt.Errorf("error building config: %v", err)
@@ -40,16 +40,16 @@ func Authorities(namespace string) ([]v1beta1.AttestationAuthority, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error building clientset: %v", err)
 	}
-	list, err := client.KritisV1beta1().AttestationAuthorities(namespace).List(metav1.ListOptions{})
+	list, err := client.KritisV1beta1().Attestors(namespace).List(metav1.ListOptions{})
 	if err != nil {
 		return nil, fmt.Errorf("error listing all attestation authorities: %v", err)
 	}
 	return list.Items, nil
 }
 
-// Authority returns the AttestationAuthority in the specified namespace and with the given name
-// Returns error if AttestationAuthority is not found
-func Authority(namespace string, name string) (*v1beta1.AttestationAuthority, error) {
+// Authority returns the Attestor in the specified namespace and with the given name
+// Returns error if Attestor is not found
+func Authority(namespace string, name string) (*v1beta1.Attestor, error) {
 	config, err := rest.InClusterConfig()
 	if err != nil {
 		return nil, fmt.Errorf("error building config: %v", err)
@@ -59,5 +59,5 @@ func Authority(namespace string, name string) (*v1beta1.AttestationAuthority, er
 	if err != nil {
 		return nil, fmt.Errorf("error building clientset: %v", err)
 	}
-	return client.KritisV1beta1().AttestationAuthorities(namespace).Get(name, metav1.GetOptions{})
+	return client.KritisV1beta1().Attestors(namespace).Get(name, metav1.GetOptions{})
 }

@@ -143,8 +143,8 @@ func TestCreateAttestationNoteAndOccurrence(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Could not initialize the client %v", err)
 	}
-	aa := &kritisv1beta1.AttestationAuthority{
-		Spec: kritisv1beta1.AttestationAuthoritySpec{
+	aa := &kritisv1beta1.Attestor{
+		Spec: kritisv1beta1.AttestorSpec{
 			NoteReference: fmt.Sprintf("%s/projects/%s", "api", DefaultProject),
 		},
 		ObjectMeta: metav1.ObjectMeta{
@@ -162,7 +162,7 @@ func TestCreateAttestationNoteAndOccurrence(t *testing.T) {
 	if note.Name != expectedNoteName {
 		t.Fatalf("Expected %s.\n Got %s", expectedNoteName, note.Name)
 	}
-	actualHint := note.GetAttestationAuthority().Hint.GetHumanReadableName()
+	actualHint := note.GetAttestor().Hint.GetHumanReadableName()
 	if actualHint != "note1" {
 		t.Fatalf("Expected %s.\n Got %s", expectedNoteName, actualHint)
 	}

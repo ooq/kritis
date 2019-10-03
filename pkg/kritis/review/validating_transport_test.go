@@ -42,23 +42,23 @@ func TestValidatingTransport(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error %v", err)
 	}
-	validAuth := v1beta1.AttestationAuthority{
+	validAuth := v1beta1.Attestor{
 		ObjectMeta: metav1.ObjectMeta{Name: "test-attestor"},
-		Spec: v1beta1.AttestationAuthoritySpec{
+		Spec: v1beta1.AttestorSpec{
 			PrivateKeySecretName: "test-success",
 			PublicKeyData:        base64.StdEncoding.EncodeToString([]byte(pub)),
 		},
 	}
-	invalidAuth := v1beta1.AttestationAuthority{
+	invalidAuth := v1beta1.Attestor{
 		ObjectMeta: metav1.ObjectMeta{Name: "test-attestor"},
-		Spec: v1beta1.AttestationAuthoritySpec{
+		Spec: v1beta1.AttestorSpec{
 			PrivateKeySecretName: "test-success",
 			PublicKeyData:        "bad-key",
 		},
 	}
 	tcs := []struct {
 		name          string
-		auth          v1beta1.AttestationAuthority
+		auth          v1beta1.Attestor
 		expected      []attestation.ValidatedAttestation
 		attestations  []metadata.PGPAttestation
 		errorExpected bool

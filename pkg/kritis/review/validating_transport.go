@@ -34,7 +34,7 @@ type ValidatingTransport interface {
 // Implements ValidatingTransport.
 type AttestorValidatingTransport struct {
 	Client   metadata.Fetcher
-	Attestor v1beta1.AttestationAuthority
+	Attestor v1beta1.Attestor
 }
 
 func (avt *AttestorValidatingTransport) GetValidatedAttestations(image string) ([]attestation.ValidatedAttestation, error) {

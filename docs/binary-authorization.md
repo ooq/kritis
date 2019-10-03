@@ -136,7 +136,7 @@ build system.
 
 ```
 {
-  “name”: “projects/secure-builder/attestationAuthorities/built-securely”
+  “name”: “projects/secure-builder/attestors/built-securely”
   “public_keys”: <list of keys expected to sign this authority’s attestations>
 }
 ```
@@ -148,7 +148,7 @@ may then look like this.
 {
   “cluster_admission_requirements”: {
     “cluster_name”: “prod”,
-    “attestation_requirements”: [ “projects/secure-builder/attestationAuthorities/built-securely” ]
+    “attestation_requirements”: [ “projects/secure-builder/attestors/built-securely” ]
   }
 }
 ```

@@ -51,7 +51,7 @@ func TestValidateAndSign(t *testing.T) {
 				Namespace: "foo",
 			},
 			Spec: v1beta1.BuildPolicySpec{
-				AttestationAuthorityName: "auth1",
+				AttestorName: "auth1",
 				BuildRequirements: v1beta1.BuildRequirements{
 					BuiltFrom: "single_attestor",
 				},
@@ -63,7 +63,7 @@ func TestValidateAndSign(t *testing.T) {
 				Namespace: "foo",
 			},
 			Spec: v1beta1.BuildPolicySpec{
-				AttestationAuthorityName: "auth2",
+				AttestorName: "auth2",
 				BuildRequirements: v1beta1.BuildRequirements{
 					BuiltFrom: "multi_attestor",
 				},
@@ -75,7 +75,7 @@ func TestValidateAndSign(t *testing.T) {
 				Namespace: "foo",
 			},
 			Spec: v1beta1.BuildPolicySpec{
-				AttestationAuthorityName: "auth3",
+				AttestorName: "auth3",
 				BuildRequirements: v1beta1.BuildRequirements{
 					BuiltFrom: "multi_attestor",
 				},
@@ -87,21 +87,21 @@ func TestValidateAndSign(t *testing.T) {
 				Namespace: "foo",
 			},
 			Spec: v1beta1.BuildPolicySpec{
-				AttestationAuthorityName: "auth4",
+				AttestorName: "auth4",
 				BuildRequirements: v1beta1.BuildRequirements{
 					BuiltFrom: "no_key_attestor",
 				},
 			},
 		},
 	}
-	authFetcher = func(ns string, name string) (*v1beta1.AttestationAuthority, error) {
-		a := []v1beta1.AttestationAuthority{
+	authFetcher = func(ns string, name string) (*v1beta1.Attestor, error) {
+		a := []v1beta1.Attestor{
 			{
 				ObjectMeta: metav1.ObjectMeta{
 					Name:      "auth1",
 					Namespace: "foo",
 				},
-				Spec: v1beta1.AttestationAuthoritySpec{
+				Spec: v1beta1.AttestorSpec{
 					NoteReference:        "auth1_note",
 					PrivateKeySecretName: "auth1_key",
 					PublicKeyData:        pub1,
@@ -112,7 +112,7 @@ func TestValidateAndSign(t *testing.T) {
 					Name:      "auth2",
 					Namespace: "foo",
 				},
-				Spec: v1beta1.AttestationAuthoritySpec{
+				Spec: v1beta1.AttestorSpec{
 					NoteReference:        "auth2_note",
 					PrivateKeySecretName: "auth2_key",
 					PublicKeyData:        pub2,
@@ -123,7 +123,7 @@ func TestValidateAndSign(t *testing.T) {
 					Name:      "auth3",
 					Namespace: "foo",
 				},
-				Spec: v1beta1.AttestationAuthoritySpec{
+				Spec: v1beta1.AttestorSpec{
 					NoteReference:        "auth3_note",
 					PrivateKeySecretName: "auth3_key",
 					PublicKeyData:        pub3,
@@ -134,7 +134,7 @@ func TestValidateAndSign(t *testing.T) {
 					Name:      "auth4",
 					Namespace: "foo",
 				},
-				Spec: v1beta1.AttestationAuthoritySpec{
+				Spec: v1beta1.AttestorSpec{
 					NoteReference:        "auth4_note",
 					PrivateKeySecretName: "missing_key",
 				},

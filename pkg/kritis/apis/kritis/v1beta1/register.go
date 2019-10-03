@@ -51,8 +51,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&ImageSecurityPolicyList{},
 		&BuildPolicy{},
 		&BuildPolicyList{},
-		&AttestationAuthority{},
-		&AttestationAuthorityList{},
+		&Attestor{},
+		&AttestorList{},
 		&KritisConfig{},
 		&KritisConfigList{},
 	)

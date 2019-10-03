@@ -27,7 +27,7 @@ import (
 
 type KritisV1beta1Interface interface {
 	RESTClient() rest.Interface
-	AttestationAuthoritiesGetter
+	AttestorsGetter
 	BuildPoliciesGetter
 	GenericAttestationPoliciesGetter
 	ImageSecurityPoliciesGetter
@@ -39,8 +39,8 @@ type KritisV1beta1Client struct {
 	restClient rest.Interface
 }
 
-func (c *KritisV1beta1Client) AttestationAuthorities(namespace string) AttestationAuthorityInterface {
-	return newAttestationAuthorities(c, namespace)
+func (c *KritisV1beta1Client) Attestors(namespace string) AttestorInterface {
+	return newAttestors(c, namespace)
 }
 
 func (c *KritisV1beta1Client) BuildPolicies(namespace string) BuildPolicyInterface {
