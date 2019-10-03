@@ -18,13 +18,13 @@ limitations under the License.
 
 package v1beta1
 
-// AttestationAuthorityListerExpansion allows custom methods to be added to
-// AttestationAuthorityLister.
-type AttestationAuthorityListerExpansion interface{}
+// AttestorListerExpansion allows custom methods to be added to
+// AttestorLister.
+type AttestorListerExpansion interface{}
 
-// AttestationAuthorityNamespaceListerExpansion allows custom methods to be added to
-// AttestationAuthorityNamespaceLister.
-type AttestationAuthorityNamespaceListerExpansion interface{}
+// AttestorNamespaceListerExpansion allows custom methods to be added to
+// AttestorNamespaceLister.
+type AttestorNamespaceListerExpansion interface{}
 
 // BuildPolicyListerExpansion allows custom methods to be added to
 // BuildPolicyLister.

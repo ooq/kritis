@@ -30,9 +30,9 @@ type Fetcher interface {
 		containerImage string,
 		pgpSigningKey *secrets.PGPSigningSecret) (*grafeasv1beta1.Occurrence, error)
 	//AttestationNote getches a Attestation note for an Attestation Authority.
-	AttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeasv1beta1.Note, error)
+	AttestationNote(aa *kritisv1beta1.Attestor) (*grafeasv1beta1.Note, error)
 	// Create Attestation Note for an Attestation Authority.
-	CreateAttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeasv1beta1.Note, error)
+	CreateAttestationNote(aa *kritisv1beta1.Attestor) (*grafeasv1beta1.Note, error)
 	//Attestations get Attestation Occurrences for given image.
 	Attestations(containerImage string) ([]PGPAttestation, error)
 	// Close closes client connections

@@ -60,7 +60,7 @@ func (m *MockMetadataClient) CreateAttestationOccurence(n *grafeas.Note, image s
 	return nil, nil
 }
 
-func (m *MockMetadataClient) AttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeas.Note, error) {
+func (m *MockMetadataClient) AttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note, error) {
 	if m.Err != nil {
 		return nil, m.Err
 	}
@@ -72,7 +72,7 @@ func (m *MockMetadataClient) AttestationNote(aa *kritisv1beta1.AttestationAuthor
 	}, nil
 }
 
-func (m *MockMetadataClient) CreateAttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeas.Note, error) {
+func (m *MockMetadataClient) CreateAttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note, error) {
 	if m.Err != nil {
 		return nil, m.Err
 	}

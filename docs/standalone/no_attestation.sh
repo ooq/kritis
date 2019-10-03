@@ -37,12 +37,12 @@ fi
 
 kubectl create secret generic attestor --from-file=public=gpg.pub --from-file=private=gpg.priv
 
-# Create AttestationAuthority CRD in the k8s cluster. It will be used to enforce
+# Create Attestor CRD in the k8s cluster. It will be used to enforce
 # the GenericAttestationPolicy.
 cat <<EOF | kubectl apply -f - \
 
 apiVersion: kritis.grafeas.io/v1beta1
-kind: AttestationAuthority
+kind: Attestor
 metadata:
   name: kritis-authority
   namespace: default
@@ -52,7 +52,7 @@ spec:
   publicKeyData: $PUBLIC_KEY
 EOF
 
-# Create GenericAttestationPolicy that references the AttestationAuthority we
+# Create GenericAttestationPolicy that references the Attestor we
 # just created.
 cat <<EOF | kubectl apply -f - \
 
@@ -62,7 +62,7 @@ metadata:
   name: my-gap
   namespace: default
 spec:
-  attestationAuthorityNames:
+  attestorNames:
   - kritis-authority
 EOF
 

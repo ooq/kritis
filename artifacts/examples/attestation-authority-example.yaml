@@ -1,5 +1,5 @@
 apiVersion: kritis.grafeas.io/v1beta1
-kind: AttestationAuthority
+kind: Attestor
 metadata:
   name: kritis-authority
   namespace: default

@@ -71,8 +71,8 @@ func (r Reviewer) ReviewGAP(images []string, gaps []v1beta1.GenericAttestationPo
 		var imgAttested bool
 		for _, gap := range gaps {
 			glog.Infof("Validating against GenericAttestationPolicy %s", gap.Name)
-			// Get all AttestationAuthorities in this policy.
-			auths, err := r.getAttestationAuthoritiesForGAP(gap)
+			// Get all Attestors in this policy.
+			auths, err := r.getAttestorsForGAP(gap)
 			if err != nil {
 				return err
 			}
@@ -103,8 +103,8 @@ func (r Reviewer) ReviewISP(images []string, isps []v1beta1.ImageSecurityPolicy,
 
 	for _, isp := range isps {
 		glog.Infof("Validating against ImageSecurityPolicy %s", isp.Name)
-		// Get all AttestationAuthorities in this policy.
-		auths, err := r.getAttestationAuthoritiesForISP(isp)
+		// Get all Attestors in this policy.
+		auths, err := r.getAttestorsForISP(isp)
 		if err != nil {
 			return err
 		}
@@ -142,9 +142,9 @@ func (r Reviewer) ReviewISP(images []string, isps []v1beta1.ImageSecurityPolicy,
 }
 
 // Returns a subset of 'auths' for which there are no attestations for 'image'.
-// In particular, if this returns an empty result, then 'image' has at least one attestation by every AttestationAuthority from 'auths'.
-func (r Reviewer) findUnsatisfiedAuths(image string, auths []v1beta1.AttestationAuthority) []v1beta1.AttestationAuthority {
-	notAttestedBy := []v1beta1.AttestationAuthority{}
+// In particular, if this returns an empty result, then 'image' has at least one attestation by every Attestor from 'auths'.
+func (r Reviewer) findUnsatisfiedAuths(image string, auths []v1beta1.Attestor) []v1beta1.Attestor {
+	notAttestedBy := []v1beta1.Attestor{}
 	for _, auth := range auths {
 		transport := AttestorValidatingTransport{Client: r.client, Attestor: auth}
 		attestations, err := transport.GetValidatedAttestations(image)
@@ -175,7 +175,7 @@ func (r Reviewer) handleViolations(image string, pod *v1.Pod, violations []polic
 }
 
 // Create attestations for 'image' by all 'auths'.
-func (r Reviewer) addAttestations(image string, isp v1beta1.ImageSecurityPolicy, auths []v1beta1.AttestationAuthority) error {
+func (r Reviewer) addAttestations(image string, isp v1beta1.ImageSecurityPolicy, auths []v1beta1.Attestor) error {
 	errMsgs := []string{}
 	for _, a := range auths {
 		// Get or Create Note for this this Authority
@@ -200,9 +200,9 @@ func (r Reviewer) addAttestations(image string, isp v1beta1.ImageSecurityPolicy,
 	return fmt.Errorf("one or more errors adding attestations: %s", errMsgs)
 }
 
-func (r Reviewer) getAttestationAuthoritiesForISP(isp v1beta1.ImageSecurityPolicy) ([]v1beta1.AttestationAuthority, error) {
-	auths := make([]v1beta1.AttestationAuthority, len(isp.Spec.AttestationAuthorityNames))
-	for i, aName := range isp.Spec.AttestationAuthorityNames {
+func (r Reviewer) getAttestorsForISP(isp v1beta1.ImageSecurityPolicy) ([]v1beta1.Attestor, error) {
+	auths := make([]v1beta1.Attestor, len(isp.Spec.AttestorNames))
+	for i, aName := range isp.Spec.AttestorNames {
 		a, err := r.config.Auths(isp.Namespace, aName)
 		if err != nil {
 			return nil, fmt.Errorf("Error getting attestors: %v", err)
@@ -212,9 +212,9 @@ func (r Reviewer) getAttestationAuthoritiesForISP(isp v1beta1.ImageSecurityPolic
 	return auths, nil
 }
 
-func (r Reviewer) getAttestationAuthoritiesForGAP(gap v1beta1.GenericAttestationPolicy) ([]v1beta1.AttestationAuthority, error) {
-	auths := make([]v1beta1.AttestationAuthority, len(gap.Spec.AttestationAuthorityNames))
-	for i, aName := range gap.Spec.AttestationAuthorityNames {
+func (r Reviewer) getAttestorsForGAP(gap v1beta1.GenericAttestationPolicy) ([]v1beta1.Attestor, error) {
+	auths := make([]v1beta1.Attestor, len(gap.Spec.AttestorNames))
+	for i, aName := range gap.Spec.AttestorNames {
 		a, err := r.config.Auths(gap.Namespace, aName)
 		if err != nil {
 			return nil, fmt.Errorf("Error getting attestors: %v", err)

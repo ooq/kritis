@@ -26,9 +26,9 @@
     EOF
     ```
 
-1. Set up an AttestationAuthority.
+1. Set up an Attestor.
 
-    Kritis relies on user-defined AttestationAuthorities to attest images to be admitted.
+    Kritis relies on user-defined Attestors to attest images to be admitted.
     Once an image is attested, it will always be (re-)admitted in the future.
 
     1. Create a public and private key pair. You'll be prompted to create a
@@ -79,7 +79,7 @@
         cat <<EOF | kubectl apply -f - \
 
         apiVersion: kritis.grafeas.io/v1beta1
-        kind: AttestationAuthority
+        kind: Attestor
         metadata:
             name: my-attestor
             namespace: default
@@ -90,7 +90,7 @@
         EOF
         ```
 
-        This `AttestationAuthority` will create [Attestation Note](https://github.com/grafeas/grafeas#definition-of-terms) in project specified in `$PROJECT` variable and attest valid images using the secret `my-attestor` which we created.
+        This `Attestor` will create [Attestation Note](https://github.com/grafeas/grafeas#definition-of-terms) in project specified in `$PROJECT` variable and attest valid images using the secret `my-attestor` which we created.
 
 1. Copy a vulnerable image.
 

@@ -33,7 +33,7 @@ import (
 
 const (
 	testAttesationAuthority = `apiVersion: kritis.grafeas.io/v1beta1
-kind: AttestationAuthority
+kind: Attestor
 metadata:
   name: test-attestor
 spec:
@@ -50,7 +50,7 @@ var crdNames = map[string]string{
 	"imagesecuritypolicies.kritis.grafeas.io": "my-isp",
 }
 
-func createAttestationAuthority(t *testing.T, ns string) {
+func createAttestor(t *testing.T, ns string) {
 	t.Helper()
 	// Generate a key value pair
 	pubKey, privKey := testutil.CreateKeyPair(t, aaSecret)

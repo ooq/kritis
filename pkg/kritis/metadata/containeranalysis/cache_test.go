@@ -89,10 +89,10 @@ func TestACache(t *testing.T) {
 }
 
 func TestNCache(t *testing.T) {
-	aaHit := &v1beta1.AttestationAuthority{ObjectMeta: metav1.ObjectMeta{
+	aaHit := &v1beta1.Attestor{ObjectMeta: metav1.ObjectMeta{
 		Name: "test-aa",
 	}}
-	aaMiss := &v1beta1.AttestationAuthority{Spec: v1beta1.AttestationAuthoritySpec{
+	aaMiss := &v1beta1.Attestor{Spec: v1beta1.AttestorSpec{
 		NoteReference: "from-client"},
 	}
 	nCache := &grafeas.Note{Name: "from-cache"}
@@ -100,11 +100,11 @@ func TestNCache(t *testing.T) {
 		client: &testutil.MockMetadataClient{},
 		vuln:   nil,
 		att:    nil,
-		notes:  map[*v1beta1.AttestationAuthority]*grafeas.Note{aaHit: nCache},
+		notes:  map[*v1beta1.Attestor]*grafeas.Note{aaHit: nCache},
 	}
 	tcs := []struct {
 		name     string
-		aa       *v1beta1.AttestationAuthority
+		aa       *v1beta1.Attestor
 		expected *grafeas.Note
 	}{
 		{"hit", aaHit, nCache},

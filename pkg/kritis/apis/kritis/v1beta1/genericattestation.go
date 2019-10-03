@@ -33,7 +33,7 @@ type GenericAttestationPolicy struct {
 
 // GenericAttestationPolicySpec is the spec for a GenericAttestationPolicy resource
 type GenericAttestationPolicySpec struct {
-	AttestationAuthorityNames []string `json:"attestationAuthorityNames"`
+	AttestorNames []string `json:"attestorNames"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

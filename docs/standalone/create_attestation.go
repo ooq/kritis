@@ -33,12 +33,12 @@ import (
 )
 
 const (
-	certFile             = "kritis.crt"
-	keyFile              = "kritis.key"
-	caFile               = "ca.crt"
-	AttestationAuthority = "ATTESTATION_AUTHORITY"
-	DefaultProject       = "kritis"
-	Image                = "gcr.io/kritis-tutorial/java-with-vulnz@sha256:358687cfd3ec8e1dfeb2bf51b5110e4e16f6df71f64fba01986f720b2fcba68a"
+	certFile       = "kritis.crt"
+	keyFile        = "kritis.key"
+	caFile         = "ca.crt"
+	Attestor       = "ATTESTOR"
+	DefaultProject = "kritis"
+	Image          = "gcr.io/kritis-tutorial/java-with-vulnz@sha256:358687cfd3ec8e1dfeb2bf51b5110e4e16f6df71f64fba01986f720b2fcba68a"
 )
 
 func main() {
@@ -110,8 +110,8 @@ func createNoteRequest() *grafeas.CreateNoteRequest {
 		Name:             fmt.Sprintf("projects/%s/notes/%s", DefaultProject, "att"),
 		ShortDescription: fmt.Sprintf("Generic Attestation Policy Attestor"),
 		LongDescription:  fmt.Sprintf("Generic Attestation Policy Attestor deployed in %s namespace", "default"),
-		Type: &grafeas.Note_AttestationAuthority{
-			AttestationAuthority: aaNote,
+		Type: &grafeas.Note_Attestor{
+			Attestor: aaNote,
 		},
 	}
 

@@ -18,7 +18,7 @@ limitations under the License.
 
 package v1beta1
 
-type AttestationAuthorityExpansion interface{}
+type AttestorExpansion interface{}
 
 type BuildPolicyExpansion interface{}
 

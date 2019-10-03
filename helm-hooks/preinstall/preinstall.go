@@ -218,10 +218,10 @@ func labelTLSSecret() {
 }
 
 func installCRDs() {
-	attestationAuthorityCmd := exec.Command("kubectl", "apply", "-f", "-")
-	crd := fmt.Sprintf(attestationAuthorityCRD, kritisInstallLabel)
-	attestationAuthorityCmd.Stdin = bytes.NewReader([]byte(crd))
-	install.RunCommand(attestationAuthorityCmd)
+	attestorCmd := exec.Command("kubectl", "apply", "-f", "-")
+	crd := fmt.Sprintf(attestorCRD, kritisInstallLabel)
+	attestorCmd.Stdin = bytes.NewReader([]byte(crd))
+	install.RunCommand(attestorCmd)
 
 	gapCommand := exec.Command("kubectl", "apply", "-f", "-")
 	crd = fmt.Sprintf(genericAttestationPolicyCRD, kritisInstallLabel)

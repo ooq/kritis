@@ -57,7 +57,7 @@ func TestReviewGAP(t *testing.T) {
 			Namespace: "foo",
 		},
 		Spec: v1beta1.GenericAttestationPolicySpec{
-			AttestationAuthorityNames: []string{"test"},
+			AttestorNames: []string{"test"},
 		},
 	}
 	gaps := []v1beta1.GenericAttestationPolicy{gap}
@@ -67,14 +67,14 @@ func TestReviewGAP(t *testing.T) {
 				Namespace: "foo",
 			},
 			Spec: v1beta1.GenericAttestationPolicySpec{
-				AttestationAuthorityNames: []string{"unknown"},
+				AttestorNames: []string{"unknown"},
 			},
 		},
 	}
-	authMock := func(_ string, name string) (*v1beta1.AttestationAuthority, error) {
-		return &v1beta1.AttestationAuthority{
+	authMock := func(_ string, name string) (*v1beta1.Attestor, error) {
+		return &v1beta1.Attestor{
 			ObjectMeta: metav1.ObjectMeta{Name: name},
-			Spec: v1beta1.AttestationAuthoritySpec{
+			Spec: v1beta1.AttestorSpec{
 				NoteReference:        "provider/test",
 				PrivateKeySecretName: "test",
 				PublicKeyData:        base64.StdEncoding.EncodeToString([]byte(pub)),
@@ -192,14 +192,14 @@ func TestReviewISP(t *testing.T) {
 				Namespace: "foo",
 			},
 			Spec: v1beta1.ImageSecurityPolicySpec{
-				AttestationAuthorityNames: []string{"test"},
+				AttestorNames: []string{"test"},
 			},
 		},
 	}
-	authMock := func(_ string, name string) (*v1beta1.AttestationAuthority, error) {
-		return &v1beta1.AttestationAuthority{
+	authMock := func(_ string, name string) (*v1beta1.Attestor, error) {
+		return &v1beta1.Attestor{
 			ObjectMeta: metav1.ObjectMeta{Name: name},
-			Spec: v1beta1.AttestationAuthoritySpec{
+			Spec: v1beta1.AttestorSpec{
 				NoteReference:        "provider/test",
 				PrivateKeySecretName: "test",
 				PublicKeyData:        base64.StdEncoding.EncodeToString([]byte(pub)),
@@ -363,10 +363,10 @@ func TestReviewISP(t *testing.T) {
 	}
 }
 
-func makeAuth(ids []string) []v1beta1.AttestationAuthority {
-	l := make([]v1beta1.AttestationAuthority, len(ids))
+func makeAuth(ids []string) []v1beta1.Attestor {
+	l := make([]v1beta1.Attestor, len(ids))
 	for i, s := range ids {
-		l[i] = v1beta1.AttestationAuthority{
+		l[i] = v1beta1.Attestor{
 			ObjectMeta: metav1.ObjectMeta{
 				Name: s,
 			},
@@ -385,27 +385,27 @@ func makeAtt(ids []string) []metadata.PGPAttestation {
 	return l
 }
 
-func TestGetAttestationAuthoritiesForGAP(t *testing.T) {
-	authsMap := map[string]v1beta1.AttestationAuthority{
+func TestGetAttestorsForGAP(t *testing.T) {
+	authsMap := map[string]v1beta1.Attestor{
 		"a1": {
 			ObjectMeta: metav1.ObjectMeta{Name: "a1"},
-			Spec: v1beta1.AttestationAuthoritySpec{
+			Spec: v1beta1.AttestorSpec{
 				NoteReference:        "provider/test",
 				PrivateKeySecretName: "test",
 				PublicKeyData:        "testdata",
 			}},
 		"a2": {
 			ObjectMeta: metav1.ObjectMeta{Name: "a2"},
-			Spec: v1beta1.AttestationAuthoritySpec{
+			Spec: v1beta1.AttestorSpec{
 				NoteReference:        "provider/test",
 				PrivateKeySecretName: "test",
 				PublicKeyData:        "testdata",
 			}},
 	}
-	authMock := func(ns string, name string) (*v1beta1.AttestationAuthority, error) {
+	authMock := func(ns string, name string) (*v1beta1.Attestor, error) {
 		a, ok := authsMap[name]
 		if !ok {
-			return &v1beta1.AttestationAuthority{}, fmt.Errorf("could not find key %s", name)
+			return &v1beta1.Attestor{}, fmt.Errorf("could not find key %s", name)
 		}
 		return &a, nil
 	}
@@ -442,10 +442,10 @@ func TestGetAttestationAuthoritiesForGAP(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			gap := v1beta1.GenericAttestationPolicy{
 				Spec: v1beta1.GenericAttestationPolicySpec{
-					AttestationAuthorityNames: tc.aList,
+					AttestorNames: tc.aList,
 				},
 			}
-			auths, err := r.getAttestationAuthoritiesForGAP(gap)
+			auths, err := r.getAttestorsForGAP(gap)
 			if (err != nil) != tc.shouldErr {
 				t.Errorf("expected review to return error %t, actual error %s", tc.shouldErr, err)
 			}
@@ -455,27 +455,27 @@ func TestGetAttestationAuthoritiesForGAP(t *testing.T) {
 		})
 	}
 }
-func TestGetAttestationAuthoritiesForISP(t *testing.T) {
-	authsMap := map[string]v1beta1.AttestationAuthority{
+func TestGetAttestorsForISP(t *testing.T) {
+	authsMap := map[string]v1beta1.Attestor{
 		"a1": {
 			ObjectMeta: metav1.ObjectMeta{Name: "a1"},
-			Spec: v1beta1.AttestationAuthoritySpec{
+			Spec: v1beta1.AttestorSpec{
 				NoteReference:        "provider/test",
 				PrivateKeySecretName: "test",
 				PublicKeyData:        "testdata",
 			}},
 		"a2": {
 			ObjectMeta: metav1.ObjectMeta{Name: "a2"},
-			Spec: v1beta1.AttestationAuthoritySpec{
+			Spec: v1beta1.AttestorSpec{
 				NoteReference:        "provider/test",
 				PrivateKeySecretName: "test",
 				PublicKeyData:        "testdata",
 			}},
 	}
-	authMock := func(ns string, name string) (*v1beta1.AttestationAuthority, error) {
+	authMock := func(ns string, name string) (*v1beta1.Attestor, error) {
 		a, ok := authsMap[name]
 		if !ok {
-			return &v1beta1.AttestationAuthority{}, fmt.Errorf("could not find key %s", name)
+			return &v1beta1.Attestor{}, fmt.Errorf("could not find key %s", name)
 		}
 		return &a, nil
 	}
@@ -512,10 +512,10 @@ func TestGetAttestationAuthoritiesForISP(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			isp := v1beta1.ImageSecurityPolicy{
 				Spec: v1beta1.ImageSecurityPolicySpec{
-					AttestationAuthorityNames: tc.aList,
+					AttestorNames: tc.aList,
 				},
 			}
-			auths, err := r.getAttestationAuthoritiesForISP(isp)
+			auths, err := r.getAttestorsForISP(isp)
 			if (err != nil) != tc.shouldErr {
 				t.Errorf("expected review to return error %t, actual error %s", tc.shouldErr, err)
 			}

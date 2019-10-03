@@ -65,7 +65,7 @@ func (s Signer) ValidateAndSign(prov BuildProvenance, bps []v1beta1.BuildPolicy)
 			continue
 		}
 		glog.Infof("Image %q matches BuildPolicy %s, creating attestations", prov.ImageRef, bp.Name)
-		if err := s.addAttestation(prov.ImageRef, bp.Namespace, bp.Spec.AttestationAuthorityName); err != nil {
+		if err := s.addAttestation(prov.ImageRef, bp.Namespace, bp.Spec.AttestorName); err != nil {
 			return err
 		}
 	}

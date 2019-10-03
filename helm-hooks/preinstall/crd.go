@@ -17,10 +17,10 @@ limitations under the License.
 package main
 
 const (
-	attestationAuthorityCRD = `apiVersion: apiextensions.k8s.io/v1beta1
+	attestorCRD = `apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-    name: attestationauthorities.kritis.grafeas.io
+    name: attestors.kritis.grafeas.io
     labels:
         %s: ""
 spec:
@@ -28,9 +28,9 @@ spec:
     version: v1beta1
     scope: Namespaced
     names:
-        plural: attestationauthorities
-        singular: attestationauthority
-        kind: AttestationAuthority`
+        plural: attestors
+        singular: attestor
+        kind: Attestor`
 
 	genericAttestationPolicyCRD = `apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition

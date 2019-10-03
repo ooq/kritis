@@ -28,7 +28,7 @@ type Cache struct {
 	client metadata.Fetcher
 	vuln   map[string][]metadata.Vulnerability
 	att    map[string][]metadata.PGPAttestation
-	notes  map[*kritisv1beta1.AttestationAuthority]*grafeas.Note
+	notes  map[*kritisv1beta1.Attestor]*grafeas.Note
 }
 
 // NewCache Create a new Cache for container analysis client.
@@ -41,7 +41,7 @@ func NewCache() (*Cache, error) {
 		client: c,
 		vuln:   map[string][]metadata.Vulnerability{},
 		att:    map[string][]metadata.PGPAttestation{},
-		notes:  map[*kritisv1beta1.AttestationAuthority]*grafeas.Note{},
+		notes:  map[*kritisv1beta1.Attestor]*grafeas.Note{},
 	}, nil
 }
 
@@ -74,13 +74,13 @@ func (c Cache) Attestations(image string) ([]metadata.PGPAttestation, error) {
 	return a, err
 }
 
-// CreateAttestationNote creates an attestation note from AttestationAuthority
-func (c Cache) CreateAttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeas.Note, error) {
+// CreateAttestationNote creates an attestation note from Attestor
+func (c Cache) CreateAttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note, error) {
 	return c.client.CreateAttestationNote(aa)
 }
 
-// AttestationNote returns a note if it exists for given AttestationAuthority
-func (c Cache) AttestationNote(aa *kritisv1beta1.AttestationAuthority) (*grafeas.Note, error) {
+// AttestationNote returns a note if it exists for given Attestor
+func (c Cache) AttestationNote(aa *kritisv1beta1.Attestor) (*grafeas.Note, error) {
 	if n, ok := c.notes[aa]; ok {
 		return n, nil
 	}

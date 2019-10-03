@@ -7,7 +7,7 @@ Installing Kritis, creates a number of resources in your cluster. Here are the m
 | kritis-validation-hook| ValidatingWebhookConfiguration | This is Kubernetes [Validating Admission Webhook](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers) which enforces the policies. |
 | genericattestationpolicies.kritis.grafeas.io | crd | This CRD defines the generic attestation policy kind GenericAttestationPolicy.|
 | imagesecuritypolicies.kritis.grafeas.io | crd | This CRD defines the image security policy kind ImageSecurityPolicy.|
-| attestationauthorities.kritis.grafeas.io | crd | The CRD defines the attestation authority policy kind AttestationAuthority.|
+| attestors.kritis.grafeas.io | crd | The CRD defines the attestation authority policy kind Attestor.|
 | tls-webhook-secret | secret | Secret required for ValidatingWebhookConfiguration|
 
 ## kritis-validation-hook
@@ -106,7 +106,7 @@ Here are the valid values for Policy Specs.
 |                                           | ALLOW_ALL | Allow all unpatchable vulnerabilities.  |
 |                                           | BLOCK_ALL | Block all unpatchable vulnerabilities except listed in allowlist. |
 
-## AttestationAuthority CRD
+## Attestor CRD
 
 The webhook will attest valid images once they pass the validity check. This is important because re-deployments can occur from scaling events,rescheduling, termination, etc. Attested images are always admitted in custer.
 This allows users to manually deploy a container with an older image which was validated in past.
@@ -114,13 +114,13 @@ This allows users to manually deploy a container with an older image which was v
 To view the attesation authority CRD run,
 
 ```shell
-kubectl describe crd attestationauthorities.kritis.grafeas.io
+kubectl describe crd attestors.kritis.grafeas.io
 ```
 
 To list all attestation authorities:
 
 ```shell
-kubectl get AttestationAuthority --all-namespaces
+kubectl get Attestor --all-namespaces
 ```
 
 Here is example output:
@@ -134,7 +134,7 @@ example AttestionAuthority:
 
 ```yaml
 apiVersion: kritis.github.com/v1beta1
-kind: AttestationAuthority
+kind: Attestor
 metadata:
     name: qa-attestator
     namespace: qa
@@ -144,7 +144,7 @@ spec:
     publicKeyData: ...
 ```
 
-Where “image-attestor” is the project for creating AttestationAuthority Notes.
+Where “image-attestor” is the project for creating Attestor Notes.
 
 In order to create notes, the service account `gac-ca-admin` must have `containeranalysis.notes.attacher role` on this project.
 
