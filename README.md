@@ -1,4 +1,4 @@
-# Kritis
+# Kritis Documentation
 
 [![GoDoc Widget]][GoDoc]
 [![BuildStatus Widget]][BuildStatus Result]
