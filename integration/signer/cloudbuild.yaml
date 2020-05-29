@@ -7,4 +7,22 @@ steps:
   args:
     - -c
     - |
+      ls -al
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args:
+    - -c
+    - |
+      ls -al ./bin
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args:
+    - -c
+    - |
+      ls -al ./gopath/bin
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args:
+    - -c
+    - |
       cd integration/signer && ./signer_int.sh
