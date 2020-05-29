@@ -18,7 +18,8 @@ docker push $GOOD_IMAGE_URL
 # get image url with digest format
 GOOD_IMG_DIGEST_URL=$(docker image inspect $GOOD_IMAGE_URL --format '{{index .RepoDigests 0}}')
 
-apt-get update && apt-get -y install python2.7 python-pip && pip install google-cloud-containeranalysis
+python --version
+apt-get update && apt-get -y -f install python2.7 python-pip && pip install google-cloud-containeranalysis
 ./wait-for-analysis.py $GOOD_IMG_DIGEST_URL $PROJECT_ID
 
 # build a "bad" example image
