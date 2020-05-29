@@ -1,10 +1,10 @@
 steps:
 - name: 'gcr.io/cloud-builders/go:debian'
-  args: ['install', './cmd/kritis/signer']
+  args: ['build', './cmd/kritis/signer']
   env: ['PROJECT_ROOT=github.com/grafeas/kritis']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args:
     - -c
     - |
-      pwd & ls -al gopath & ls -al gopath/bin && ./gopath/bin/signer --help && cd integration/signer && ./signer_int.sh
+      ./signer --help && cd integration/signer && ./signer_int.sh
