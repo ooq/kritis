@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/go'
-  args: ['build', './cmd/kritis/signer']
+  args: ['install', './cmd/kritis/signer']
   env: ['PROJECT_ROOT=github.com/grafeas/kritis']
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
