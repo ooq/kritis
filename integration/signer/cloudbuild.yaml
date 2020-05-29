@@ -7,6 +7,7 @@ steps:
   args:
     - -c
     - |
+      cp signer integration/signer/ &&
       cd integration/signer &&
       ./signer_int.sh
   env: ['PROJECT_ID=$PROJECT_ID', 'BUILD_ID=$BUILD_ID']
