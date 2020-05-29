@@ -7,4 +7,4 @@ steps:
   args:
     - -c
     - |
-      pwd & ls -al & ls -al signer && ./gopath/bin/signer --help && cd integration/signer && ./signer_int.sh
+      pwd & ls -al gopath & ls -al gopath/bin && ./gopath/bin/signer --help && cd integration/signer && ./signer_int.sh
