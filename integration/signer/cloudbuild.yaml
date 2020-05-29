@@ -4,4 +4,5 @@ steps:
   args:
     - -c
     - |
-      pwd && ls -al
+      cd integration/signer &&
+      ./signer_int.sh
