@@ -7,4 +7,7 @@ steps:
   args:
     - -c
     - |
-      cd integration/signer && ./signer_int.sh
+      cd integration/signer &&
+      export PROJECT_ID=$PROJECT_ID
+      export BUILD_ID=$BUILD_ID
+      ./signer_int.sh
