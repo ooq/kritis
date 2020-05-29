@@ -1,8 +1,10 @@
 steps:
+- name: golang
+  args: ['go', 'build', './cmd/kritis/signer']
+
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args:
     - -c
     - |
-      cd integration/signer &&
       ./signer_int.sh
