@@ -7,4 +7,4 @@ steps:
   args:
     - -c
     - |
-      ./signer_int.sh
+      cd integration/signer && ./signer_int.sh
