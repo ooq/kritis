@@ -18,6 +18,8 @@ docker push $GOOD_IMAGE_URL
 # get image url with digest format
 GOOD_IMG_DIGEST_URL=$(docker image inspect $GOOD_IMAGE_URL --format '{{index .RepoDigests 0}}')
 
+./wait-for-analysis.py $GOOD_IMG_DIGEST_URL $PROJECT_ID
+
 # build a "bad" example image
 
 
