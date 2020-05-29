@@ -8,6 +8,5 @@ steps:
     - -c
     - |
       cd integration/signer &&
-      export PROJECT_ID=$PROJECT_ID
-      export BUILD_ID=$BUILD_ID
       ./signer_int.sh
+  env: ['PROJECT_ID=$PROJECT_ID', 'BUILD_ID=$BUILD_ID']
