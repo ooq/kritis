@@ -7,4 +7,4 @@ steps:
   args:
     - -c
     - |
-      pwd & ls -al && /workspace/signer --help && cd integration/signer && ./signer_int.sh
+      pwd & ls -al & ls -al signer && /workspace/signer --help && cd integration/signer && ./signer_int.sh
