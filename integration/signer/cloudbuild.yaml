@@ -4,4 +4,4 @@ steps:
   args:
     - -c
     - |
-      echo "Hello World."
+      pwd && ls -al
