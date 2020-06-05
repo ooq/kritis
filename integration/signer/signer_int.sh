@@ -18,6 +18,23 @@ docker push $GOOD_IMAGE_URL
 # get image url with digest format
 GOOD_IMG_DIGEST_URL=$(docker image inspect $GOOD_IMAGE_URL --format '{{index .RepoDigests 0}}')
 
+export NOTE_ID=kritis-attestor-note
+# create policy.yaml
+cat policy_template.yaml \
+| sed -e "s?<ATTESTATION_PROJECT>?${PROJECT_ID}?g" \
+| sed -e "s?<NOTE_PROJECT>?${PROJECT_ID}?g" \
+| sed -e "s?<NOTE_ID>?${NOTE_ID}?g" \
+> policy.yaml
+
+# sign good image
+./signer -v 10 \
+-alsologtostderr \
+-image=${GOOD_IMG_DIGEST_URL} \
+-public_key=public.key \
+-private_key=private.key \
+-policy=policy.yaml
+
+
 # build a "bad" example image
 
 
