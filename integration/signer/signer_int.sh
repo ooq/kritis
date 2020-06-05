@@ -55,7 +55,7 @@ BAD_IMG_DIGEST_URL=$(docker image inspect $BAD_IMAGE_URL --format '{{index .Repo
 
 ./signer -v 10 \
 -alsologtostderr \
--image=${GOOD_IMG_DIGEST_URL} \
+-image=${BAD_IMG_DIGEST_URL} \
 -public_key=public.key \
 -private_key=private.key \
 -policy=policy.yaml || exit 0
